@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="im-1" author="imohsen-c">
+        <sqlFile path="liquibase/sql/2021_04_29_create_student_table.sql"/>
+        <comment>Create Student Table</comment>
+    </changeSet>
+    <changeSet id="im-2" author="imohsen-c">
+        <sqlFile path="liquibase/sql/data/2021_04_29_student_init_data.sql"/>
+        <comment>Init Date For Student Table</comment>
+    </changeSet>
+</databaseChangeLog>
