@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public StudentViewDTO addStudent(@RequestBody StudentCreateDTO studentCreateDTO){
+    public StudentViewDTO addStudent(@RequestBody @Valid StudentCreateDTO studentCreateDTO){
         StudentEntity studentEntity = studentService.createStudent(studentCreateDTO);
         return new StudentViewDTO(studentEntity);
     }

@@ -7,5 +7,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  messages:
+    basename: messages/messages, messages/validation/messages
+  web:
+    locale: en
   liquibase:
     change-log: "classpath:/liquibase/db-changelog-master.yaml"
