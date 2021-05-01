@@ -11,4 +11,6 @@ public interface StudentService {
     StudentEntity createStudent(StudentCreateDTO studentCreateDTO);
 
     void updateStudent(Long id, StudentCreateDTO studentCreateDTO);
+
+    void deleteStudent(Long id);
 }

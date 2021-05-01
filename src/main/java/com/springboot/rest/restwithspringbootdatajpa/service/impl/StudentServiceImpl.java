@@ -35,4 +35,9 @@ public class StudentServiceImpl implements StudentService {
         modelMapper.map(studentCreateDTO, entity);
         studentRepository.save(entity);
     }
+
+    @Override
+    public void deleteStudent(Long id) {
+        studentRepository.deleteById(id);
+    }
 }
