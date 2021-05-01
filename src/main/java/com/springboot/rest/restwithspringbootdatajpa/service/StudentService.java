@@ -9,4 +9,6 @@ public interface StudentService {
     List<StudentEntity> getAllStudents();
 
     StudentEntity createStudent(StudentCreateDTO studentCreateDTO);
+
+    void updateStudent(Long id, StudentCreateDTO studentCreateDTO);
 }

@@ -5,7 +5,9 @@ import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentViewDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,9 +32,16 @@ public class StudentController {
     }
 
     @PostMapping
-    public StudentViewDTO addStudent(@RequestBody @Valid StudentCreateDTO studentCreateDTO){
+    public StudentViewDTO addStudent(@RequestBody @Valid StudentCreateDTO studentCreateDTO) {
         StudentEntity studentEntity = studentService.createStudent(studentCreateDTO);
         return new StudentViewDTO(studentEntity);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updateStudent(@PathVariable Long id, @RequestBody @Valid StudentCreateDTO studentCreateDTO) {
+        studentService.updateStudent(id, studentCreateDTO);
+        return ResponseEntity.ok().build();
     }
 
 }
