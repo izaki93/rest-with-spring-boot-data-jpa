@@ -1,13 +1,16 @@
 package com.springboot.rest.restwithspringbootdatajpa.controller.api;
 
+import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
 import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
-import com.springboot.rest.restwithspringbootdatajpa.student.dto.StudentDto;
+import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
+import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentViewDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +25,32 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public List<StudentDto> getAllStudents() {
-        List<StudentDto> studentList = new ArrayList<>();
-        studentService.getAllStudents().stream().forEach(studentEntity -> studentList.add(new StudentDto(studentEntity)));
+    public List<StudentViewDTO> getAllStudents() {
+        List<StudentViewDTO> studentList = new ArrayList<>();
+        studentService.getAllStudents().stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
         return studentList;
     }
+
+    @PostMapping
+    public StudentViewDTO addStudent(@RequestBody @Valid StudentCreateDTO studentCreateDTO) {
+        StudentEntity studentEntity = studentService.createStudent(studentCreateDTO);
+        return new StudentViewDTO(studentEntity);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updateStudent(@PathVariable Long id, @RequestBody @Valid StudentCreateDTO studentCreateDTO) {
+        studentService.updateStudent(id, studentCreateDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }
