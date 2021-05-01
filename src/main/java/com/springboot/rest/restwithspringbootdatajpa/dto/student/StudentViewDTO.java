@@ -1,4 +1,4 @@
-package com.springboot.rest.restwithspringbootdatajpa.student.dto;
+package com.springboot.rest.restwithspringbootdatajpa.dto.student;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StudentDto {
+public class StudentViewDTO {
     @JsonIgnore
     private Long id;
     @JsonProperty("first_name")
@@ -24,7 +24,7 @@ public class StudentDto {
     private Date createdAt;
     private Date modifiedAt;
 
-    public StudentDto(StudentEntity studentEntity) {
+    public StudentViewDTO(StudentEntity studentEntity) {
         this.id = studentEntity.getId();
         this.firstName = studentEntity.getFirstName();
         this.lastName = studentEntity.getLastName();

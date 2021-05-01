@@ -3,6 +3,7 @@ package com.springboot.rest.restwithspringbootdatajpa.service.impl;
 import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
 import com.springboot.rest.restwithspringbootdatajpa.repository.StudentRepository;
 import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
+import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentEntity> getAllStudents() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public StudentEntity createStudent(StudentCreateDTO studentCreateDTO) {
+        return studentRepository.save(new StudentEntity(studentCreateDTO));
     }
 }
