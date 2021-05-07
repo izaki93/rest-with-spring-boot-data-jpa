@@ -1,9 +1,10 @@
 package com.springboot.rest.restwithspringbootdatajpa.controller.api;
 
-import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
-import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentViewDTO;
+import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
+import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +26,7 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public List<StudentViewDTO> getAllStudents() {
+    public List<StudentViewDTO> getAllStudents() throws JsonProcessingException {
         List<StudentViewDTO> studentList = new ArrayList<>();
         studentService.getAllStudents().stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
         return studentList;
