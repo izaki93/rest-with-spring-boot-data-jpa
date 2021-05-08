@@ -8,6 +8,7 @@ import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
 @Data
@@ -23,6 +24,8 @@ public class StudentViewDTO {
     private String email;
     private Date createdAt;
     private Date modifiedAt;
+    @Transient
+    private String fullName;
 
     public StudentViewDTO(StudentEntity studentEntity) {
         this.id = studentEntity.getId();
@@ -31,5 +34,6 @@ public class StudentViewDTO {
         this.email = studentEntity.getEmail();
         this.createdAt = studentEntity.getCreatedAt();
         this.modifiedAt = studentEntity.getModifiedAt();
+        this.fullName =  studentEntity.getFirstName() + " " + studentEntity.getLastName();
     }
 }

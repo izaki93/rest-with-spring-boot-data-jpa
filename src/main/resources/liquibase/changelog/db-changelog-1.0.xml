@@ -17,4 +17,7 @@
         <sqlFile path="liquibase/sql/data/2021_04_29_student_init_data.sql"/>
         <comment>Init Date For Student Table</comment>
     </changeSet>
+    <changeSet id="im-3" author="imohsen-c">
+        <sqlFile path="liquibase/sql/data/2021_05_08_student_insert_more_data.sql"/>
+    </changeSet>
 </databaseChangeLog>

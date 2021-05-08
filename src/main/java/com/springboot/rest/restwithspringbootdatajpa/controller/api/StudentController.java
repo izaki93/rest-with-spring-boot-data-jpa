@@ -1,11 +1,16 @@
 package com.springboot.rest.restwithspringbootdatajpa.controller.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentViewDTO;
 import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
 import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +29,10 @@ public class StudentController {
     public static final String API_PATH = API_PREFIX + "/students";
 
     private StudentService studentService;
+    private ModelMapper modelMapper;
 
     @GetMapping
-    public List<StudentViewDTO> getAllStudents() throws JsonProcessingException {
+    public List<StudentViewDTO> getAllStudents() {
         List<StudentViewDTO> studentList = new ArrayList<>();
         studentService.getAllStudents().stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
         return studentList;
@@ -50,6 +56,44 @@ public class StudentController {
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{firstName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentViewDTO> getByFirstName(@PathVariable String firstName) {
+        List<StudentViewDTO> studentList = new ArrayList<>();
+        studentService.getByFirstName(firstName).stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
+        return studentList;
+    }
+
+    @GetMapping("/firstNameAndLastName")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentViewDTO> getByFirstNameAndLastName(@RequestParam String firstName, @RequestParam String lastName) {
+        List<StudentViewDTO> studentList = new ArrayList<>();
+        studentService.getByFirstNameAndLastName(firstName, lastName).stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
+        return studentList;
+    }
+
+    @GetMapping("getAllStudentsWithPaging")
+    public Page<StudentViewDTO> getAllStudents(@PageableDefault @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<StudentViewDTO> response = studentService.getAllStudents(pageable).map(StudentViewDTO::new);
+        return response;
+    }
+
+    @GetMapping("/like/{firstName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentViewDTO> getByFirstNameLike(@PathVariable String firstName) {
+        List<StudentViewDTO> studentList = new ArrayList<>();
+        studentService.getByFirstNameContains(firstName).stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
+        return studentList;
+    }
+
+    @GetMapping("/starts-with/{firstName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentViewDTO> getByFirstNameStartsWith(@PathVariable String firstName) {
+        List<StudentViewDTO> studentList = new ArrayList<>();
+        studentService.startsWith(firstName).stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
+        return studentList;
     }
 
 

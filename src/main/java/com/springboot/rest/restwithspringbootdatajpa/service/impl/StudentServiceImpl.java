@@ -1,12 +1,15 @@
 package com.springboot.rest.restwithspringbootdatajpa.service.impl;
 
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
+import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentViewDTO;
 import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
 import com.springboot.rest.restwithspringbootdatajpa.repository.StudentRepository;
 import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +28,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Page<StudentEntity> getAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable);
+    }
+
+    @Override
     public StudentEntity createStudent(StudentCreateDTO studentCreateDTO) {
         return studentRepository.save(new StudentEntity(studentCreateDTO));
     }
@@ -39,5 +47,25 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<StudentEntity> getByFirstName(String firstName) {
+        return studentRepository.findByFirstName(firstName);
+    }
+
+    @Override
+    public List<StudentEntity> getByFirstNameAndLastName(String firstName, String lastName) {
+        return studentRepository.findByFirstNameAndLastName(firstName,lastName);
+    }
+
+    @Override
+    public List<StudentEntity> getByFirstNameContains(String firstName) {
+        return studentRepository.findByFirstNameContains(firstName);
+    }
+
+    @Override
+    public List<StudentEntity> startsWith(String firstName) {
+        return studentRepository.findByFirstNameStartsWith(firstName);
     }
 }
