@@ -20,9 +20,13 @@ public interface StudentService {
 
     List<StudentEntity> getByFirstName(String firstName);
 
-    List<StudentEntity> getByFirstNameAndLastName(String firstName, String lastName);
+    StudentEntity getByFirstNameAndLastName(String firstName, String lastName);
 
     List<StudentEntity> getByFirstNameContains(String firstName);
 
     List<StudentEntity> startsWith(String firstName);
+
+    void updateFirstNameWithJPQL(Long id, String firstName);
+
+    void deleteByFirstNameWithJPQL(String firstName);
 }

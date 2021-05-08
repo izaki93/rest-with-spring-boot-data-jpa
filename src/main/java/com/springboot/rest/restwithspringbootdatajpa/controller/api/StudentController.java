@@ -68,10 +68,9 @@ public class StudentController {
 
     @GetMapping("/firstNameAndLastName")
     @ResponseStatus(HttpStatus.OK)
-    public List<StudentViewDTO> getByFirstNameAndLastName(@RequestParam String firstName, @RequestParam String lastName) {
-        List<StudentViewDTO> studentList = new ArrayList<>();
-        studentService.getByFirstNameAndLastName(firstName, lastName).stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
-        return studentList;
+    public StudentViewDTO getByFirstNameAndLastName(@RequestParam String firstName, @RequestParam String lastName) {
+        StudentEntity studentEntity = studentService.getByFirstNameAndLastName(firstName, lastName);
+        return new StudentViewDTO(studentEntity);
     }
 
     @GetMapping("getAllStudentsWithPaging")
@@ -96,6 +95,18 @@ public class StudentController {
         return studentList;
     }
 
+    @PutMapping("/update-first-name/{id}/{firstName}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updateFirstName(@PathVariable Long id, @PathVariable String firstName) {
+        studentService.updateFirstNameWithJPQL(id, firstName);
+        return ResponseEntity.ok().build();
+    }
 
+    @DeleteMapping("/delete-by-first-name/{firstName}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> deleteByFirstName(@PathVariable String firstName) {
+        studentService.deleteByFirstNameWithJPQL(firstName);
+        return ResponseEntity.ok().build();
+    }
 
 }

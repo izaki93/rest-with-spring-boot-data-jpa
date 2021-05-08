@@ -5,6 +5,7 @@ import com.springboot.rest.restwithspringbootdatajpa.model.TrackedEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Transient;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "student")
+@ToString(callSuper = true)
 public class StudentEntity extends TrackedEntity {
 
     @Column(name = "first_name")

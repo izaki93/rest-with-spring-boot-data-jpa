@@ -55,8 +55,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentEntity> getByFirstNameAndLastName(String firstName, String lastName) {
-        return studentRepository.findByFirstNameAndLastName(firstName,lastName);
+    public StudentEntity getByFirstNameAndLastName(String firstName, String lastName) {
+        /** call Query Methods **/
+        // return studentRepository.findByFirstNameAndLastName(firstName,lastName);
+
+        /** call Java Persistence Query Language (JPQL) Methods **/
+        return studentRepository.getByFirstNameAndLastName(firstName,lastName);
     }
 
     @Override
@@ -67,5 +71,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentEntity> startsWith(String firstName) {
         return studentRepository.findByFirstNameStartsWith(firstName);
+    }
+
+    @Override
+    public void updateFirstNameWithJPQL(Long id, String firstName) {
+        studentRepository.updateFirstName(id, firstName);
+    }
+
+    @Override
+    public void deleteByFirstNameWithJPQL(String firstName) {
+        studentRepository.deleteByFirstName(firstName);
     }
 }
