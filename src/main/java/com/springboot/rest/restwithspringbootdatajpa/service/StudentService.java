@@ -1,7 +1,7 @@
 package com.springboot.rest.restwithspringbootdatajpa.service;
 
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
-import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
+import com.springboot.rest.restwithspringbootdatajpa.model.StudentEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -29,4 +29,6 @@ public interface StudentService {
     void updateFirstNameWithJPQL(Long id, String firstName);
 
     void deleteByFirstNameWithJPQL(String firstName);
+
+    List<StudentEntity> getByCity(String city);
 }

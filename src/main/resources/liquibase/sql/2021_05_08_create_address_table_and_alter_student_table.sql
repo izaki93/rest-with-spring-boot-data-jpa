@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS address(
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  street VARCHAR(100) NOT NULL,
+  city VARCHAR(45) NULL,
+  created TIMESTAMP NULL,
+  modified TIMESTAMP NULL
+);
+
+ALTER TABLE student
+    ADD COLUMN IF NOT EXISTS address_id BIGINT NULL,
+    ADD CONSTRAINT fk_address_id
+    FOREIGN KEY (address_id)
+    REFERENCES address (id);

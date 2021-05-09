@@ -2,10 +2,9 @@ package com.springboot.rest.restwithspringbootdatajpa.controller.api;
 
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentCreateDTO;
 import com.springboot.rest.restwithspringbootdatajpa.dto.student.StudentViewDTO;
-import com.springboot.rest.restwithspringbootdatajpa.model.student.StudentEntity;
+import com.springboot.rest.restwithspringbootdatajpa.model.StudentEntity;
 import com.springboot.rest.restwithspringbootdatajpa.service.StudentService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.springboot.rest.restwithspringbootdatajpa.controller.ControllerConstants.API_PREFIX;
 
@@ -29,7 +29,6 @@ public class StudentController {
     public static final String API_PATH = API_PREFIX + "/students";
 
     private StudentService studentService;
-    private ModelMapper modelMapper;
 
     @GetMapping
     public List<StudentViewDTO> getAllStudents() {
@@ -109,4 +108,8 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/get-by-city/{city}")
+    public List<StudentViewDTO> getByCity(@PathVariable String city) {
+        return studentService.getByCity(city).stream().map(StudentViewDTO::new).collect(Collectors.toList());
+    }
 }
