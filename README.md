@@ -18,13 +18,13 @@ PostgreSQL is installed. Next sql queries have been executed:
 ```
 CREATE DATABASE spring-rest-db;
 
-* change the DB user name and password to match your own :
+* change the DB user name and password in application.yml file to match your own :
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/spring-rest-db
-    username: ###{YOUR_DB_USER_NAME_HERE}
-    password: ###{YOUR_DB_PASSWORD_HERE}
+    username: {YOUR_DB_USER_NAME_HERE}
+    password: {YOUR_DB_PASSWORD_HERE}
 ```
 
 # Getting started
