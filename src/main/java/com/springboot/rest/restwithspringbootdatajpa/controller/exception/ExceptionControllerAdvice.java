@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.springboot.rest.restwithspringbootdatajpa.controller.exception.ExceptionConstants.API_ERROR;
 import static com.springboot.rest.restwithspringbootdatajpa.controller.exception.ExceptionConstants.ENTITY_NOT_FOUND;
+import static com.springboot.rest.restwithspringbootdatajpa.controller.helper.ControllerHelper.logException;
 
 @Slf4j
 @ControllerAdvice
@@ -24,18 +25,24 @@ public class ExceptionControllerAdvice extends RestControllerAdvice {
     @ExceptionHandler(Throwable.class)
     public RestExceptionDTO genericExceptionHandler(HttpServletResponse resp, Throwable ex) {
         log.error("API exception", ex);
-        return buildExceptionDTO(resp, API_ERROR, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        RestExceptionDTO restExceptionDTO = buildExceptionDTO(resp, API_ERROR, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        logException(restExceptionDTO, ex);
+        return restExceptionDTO;
     }
 
     @ResponseBody
     @ExceptionHandler(EntityNotFoundException.class)
     public RestExceptionDTO entityNotFoundExceptionHandler(HttpServletResponse resp, EntityNotFoundException ex) {
-        return buildExceptionDTO(resp, ENTITY_NOT_FOUND, ex.getMessage(), HttpStatus.NOT_FOUND);
+        RestExceptionDTO restExceptionDTO = buildExceptionDTO(resp, ENTITY_NOT_FOUND, ex.getMessage(), HttpStatus.NOT_FOUND);
+        logException(restExceptionDTO, ex);
+        return restExceptionDTO;
     }
 
     @ResponseBody
     @ExceptionHandler(IllegalArgumentException.class)
-    public RestExceptionDTO illegalArgumentExceptionHandler(HttpServletResponse resp, IllegalArgumentException ex){
-        return buildExceptionDTO(resp,API_ERROR,ex.getMessage(),HttpStatus.BAD_REQUEST);
+    public RestExceptionDTO illegalArgumentExceptionHandler(HttpServletResponse resp, IllegalArgumentException ex) {
+        RestExceptionDTO restExceptionDTO = buildExceptionDTO(resp, API_ERROR, ex.getMessage(), HttpStatus.BAD_REQUEST);
+        logException(restExceptionDTO, ex);
+        return restExceptionDTO;
     }
 }

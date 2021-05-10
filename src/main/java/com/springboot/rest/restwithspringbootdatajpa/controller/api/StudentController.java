@@ -14,13 +14,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.springboot.rest.restwithspringbootdatajpa.controller.ControllerConstants.API_PREFIX;
+import static com.springboot.rest.restwithspringbootdatajpa.controller.helper.ControllerHelper.*;
 
 @AllArgsConstructor
 @RestController
@@ -31,29 +34,41 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public List<StudentViewDTO> getAllStudents() {
+    public List<StudentViewDTO> getAllStudents(@ApiIgnore HttpServletRequest request) {
+        logRequest(request, "", "studentService.getAllStudents()", "");
         List<StudentViewDTO> studentList = new ArrayList<>();
         studentService.getAllStudents().stream().forEach(studentEntity -> studentList.add(new StudentViewDTO(studentEntity)));
+        logResponse(request, "", "studentService.getAllStudents()", HttpStatus.OK.toString(), toJsonString(studentList));
         return studentList;
     }
 
     @PostMapping
-    public StudentViewDTO addStudent(@RequestBody @Valid StudentCreateDTO studentCreateDTO) {
+    public StudentViewDTO addStudent(@ApiIgnore HttpServletRequest request,
+                                     @RequestBody @Valid StudentCreateDTO studentCreateDTO) {
+
+        logRequest(request, "", "studentService.createStudent", toJsonString(studentCreateDTO));
         StudentEntity studentEntity = studentService.createStudent(studentCreateDTO);
-        return new StudentViewDTO(studentEntity);
+        StudentViewDTO studentViewDTO = new StudentViewDTO(studentEntity);
+        logResponse(request, "", "studentService.createStudent", HttpStatus.OK.toString(), toJsonString(studentViewDTO));
+        return studentViewDTO;
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> updateStudent(@PathVariable Long id, @RequestBody @Valid StudentCreateDTO studentCreateDTO) {
+    public ResponseEntity<Void> updateStudent(@ApiIgnore HttpServletRequest request,
+                                              @PathVariable Long id, @RequestBody @Valid StudentCreateDTO studentCreateDTO) {
+        logRequest(request, "", "studentService.updateStudent", toJsonString(studentCreateDTO));
         studentService.updateStudent(id, studentCreateDTO);
+        logResponse(request, "", "studentService.updateStudent", HttpStatus.OK.toString(), "");
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteStudent(@ApiIgnore HttpServletRequest request, @PathVariable Long id) {
+        logRequest(request, "", "studentService.deleteStudent", "{\"id\":" + id + "}");
         studentService.deleteStudent(id);
+        logResponse(request, "", "studentService.deleteStudent", HttpStatus.OK.toString(), "");
         return ResponseEntity.ok().build();
     }
 
