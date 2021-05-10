@@ -23,6 +23,7 @@ repositories {
 }
 ext {
     modelmapperVersion = '2.4.2'
+    swaggerVersion = '2.9.2'
 }
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-log4j2')
@@ -32,6 +33,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.liquibase:liquibase-core'
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
     compile "org.modelmapper:modelmapper:${modelmapperVersion}"
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

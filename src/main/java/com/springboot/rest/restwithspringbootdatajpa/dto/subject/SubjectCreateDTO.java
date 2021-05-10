@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SubjectCreateDTO extends TrackedDTO {
+public class SubjectCreateDTO {
     private String subjectName;
     private Double marksObtained;
 }
